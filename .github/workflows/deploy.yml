@@ -33,7 +33,7 @@ jobs:
           DOKPLOY_HOST: "http://196.190.220.43:3000/"
           DOCKER_IMAGE: "${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}:latest"
         run: |
-          curl -X POST "$DOKPLOY_HOST/api/deployment.trigger" \
+          curl -X POST "$DOKPLOY_HOST/api/application.deploy" \
           -H "Authorization: Bearer $DOKPLOY_API_TOKEN" \
           -H "accept: application/json" \
           -d '{
