@@ -28,9 +28,9 @@ jobs:
 
       - name: Trigger Dokploy Deployment via API
         run: |
-          curl -X POST "${{ secrets.DOKPLOY_API_URL }}/deploy" \
-          -H "Content-Type: application/json" \
-          -H "Authorization: Bearer ${{ secrets.DOKPLOY_API_TOKEN }}" \
+          'https://dokploy.com/api/project.all' \
+          -H 'accept: application/json' \
+          -H 'x-api-key: DEPLOY_API_TOKEN'
           -d '{
                 "app": "ci-cd-demo",
                 "image": "'${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}:latest'",
