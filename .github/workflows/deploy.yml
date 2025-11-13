@@ -36,7 +36,7 @@ jobs:
           curl -X POST "$DOKPLOY_HOST/api/application.deploy" \
           -H "Authorization: Bearer $DOKPLOY_API_TOKEN" \
           -H "accept: application/json" \
-          -d '{
+          -d '{ "applicationId": "7PIuOX-GntoB13JVs_w-h" 
                 "app": "ci-cd-demo",
                 "image": "'${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}:latest'",
                 "ports": [
