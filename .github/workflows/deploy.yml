@@ -1,0 +1,43 @@
+name: Deploy to Dokploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Private Docker Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}:latest
+
+      - name: Trigger Dokploy Deployment via API
+        run: |
+          curl -X POST "${{ secrets.DOKPLOY_API_URL }}/deploy" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer ${{ secrets.DOKPLOY_API_TOKEN }}" \
+          -d '{
+                "app": "ci-cd-demo",
+                "image": "'${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}:latest'",
+                "ports": [
+                  {
+                    "host": 3001,
+                    "container": 3000
+                  }
+                ]
+              }'
