@@ -24,7 +24,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}:latest
+          tags: ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_REPO }}/test:latest
 
       - name: Trigger Dokploy Deployment via API
         run: |
