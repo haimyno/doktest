@@ -7,4 +7,4 @@ app.get('/', (req, res) => {
   res.send('🚀 CI/CD Demo App Deployed via Dokploy!');
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`My Server is running on port ${PORT}`));
